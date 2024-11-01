@@ -1,13 +1,14 @@
 {
-  "name": "Root DNS Codespace",
+  "name": "Root and Custom DNS Codespace",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "runArgs": [
-    "--dns", "198.41.0.4",   // Verisign, Inc. (a.root-servers.net)
-    "--dns", "192.33.4.12",  // Cogent Communications (c.root-servers.net)
-    "--dns", "192.36.148.17" // Netnod (i.root-servers.net)
+    "--dns", "76.76.19.19",     // Primary Custom DNS (IPv4)
+    "--dns", "76.223.122.150",  // Secondary Custom DNS (IPv4)
+    "--dns", "2602:fcbc::ad",   // Primary Custom DNS (IPv6)
+    "--dns", "2602:fcbc:2::ad"  // Secondary Custom DNS (IPv6)
   ],
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "postCreateCommand": "echo 'Root DNS servers configured'"
+  "postCreateCommand": "echo 'Root and custom DNS servers configured'"
 }
