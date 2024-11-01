@@ -1,0 +1,13 @@
+{
+  "name": "Root DNS Codespace",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "runArgs": [
+    "--dns", "198.41.0.4",   // Verisign, Inc. (a.root-servers.net)
+    "--dns", "192.33.4.12",  // Cogent Communications (c.root-servers.net)
+    "--dns", "192.36.148.17" // Netnod (i.root-servers.net)
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "postCreateCommand": "echo 'Root DNS servers configured'"
+}
