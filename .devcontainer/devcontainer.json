@@ -1,14 +1,14 @@
 {
-  "name": "Root and Custom DNS Codespace",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "runArgs": [
-    "--dns", "76.76.19.19",     // Primary Custom DNS (IPv4)
-    "--dns", "76.223.122.150",  // Secondary Custom DNS (IPv4)
-    "--dns", "2602:fcbc::ad",   // Primary Custom DNS (IPv6)
-    "--dns", "2602:fcbc:2::ad"  // Secondary Custom DNS (IPv6)
-  ],
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
+  "name": "Dns base codespace",
+  "image": "mcr.microsoft.com/devcontainers/python:3.8",
+  "containerEnv": {
+    "SERVER_DNS": "dns10.quad9.net"  // Set your desired DNS host name here
   },
-  "postCreateCommand": "echo 'Root and custom DNS servers configured'"
+  "postCreateCommand": [
+    "echo 'nameserver 9.9.9.10' | sudo tee /etc/resolv.conf > /dev/null",
+    "echo 'nameserver 149.112.112.10' | sudo tee -a /etc/resolv.conf > /dev/null",
+    "echo 'nameserver 2620:fe::10' | sudo tee -a /etc/resolv.conf > /dev/null",
+    "echo 'nameserver 2620:fe::fe:10' | sudo tee -a /etc/resolv.conf > /dev/null"
+  ],
+  "remoteUser": "root"
 }
