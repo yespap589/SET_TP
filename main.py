@@ -12,13 +12,37 @@ github_data = [
         "repo": "yespap589/SET_TP"
     },
     {
-        "token": "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",
-        "repo": "yespap589/SET_TP"
+        "token": "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",
+        "repo": "wadu696/yoga"
     }
 ]
 
+# Function to get the latest workflow run ID
+def get_latest_workflow_run(repo, token):
+    url = f"https://api.github.com/repos/{repo}/actions/runs"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        runs = response.json()['workflow_runs']
+        if runs:
+            # Return the ID of the latest run
+            return runs[0]['id']
+    else:
+        print(f"Failed to get workflow runs for {repo}: {response.status_code} {response.text}")
+    
+    return None
+
 # Function to stop the current workflow
 def stop_current_workflow(repo, token, workflow_run_id):
+    if not workflow_run_id:
+        print(f"No workflow run ID provided for {repo}.")
+        return
+
     url = f"https://api.github.com/repos/{repo}/actions/runs/{workflow_run_id}/cancel"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -70,8 +94,8 @@ def handle_G9(message):
 
             # Stop the current workflow and start a new one
             for data in github_data:
-                # Assuming you have the workflow run ID of the current workflow
-                workflow_run_id = 'CURRENT_WORKFLOW_RUN_ID'  # Replace with actual run ID if available
+                # Get the latest workflow run ID
+                workflow_run_id = get_latest_workflow_run(data['repo'], data['token'])
                 stop_current_workflow(data['repo'], data['token'], workflow_run_id)
                 trigger_workflow(data['repo'], data['token'])
     else:
