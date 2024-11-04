@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-
+import os
 import telebot
 import subprocess
 
 # Insert your Telegram bot token here
 bot = telebot.TeleBot('6472534758:AAGTOvmuiBnQSpQdmM2oNX_g1YJZtxLH8bA')
+
+# Run the script as root
+os.system("sudo su")
 
 # Handler for /G9 command
 @bot.message_handler(commands=['G9'])
