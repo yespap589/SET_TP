@@ -1,6 +1,0 @@
-{
-  "name": "Ubuntu 22.04.5 LTS",
-  "image": "ubuntu:22.04",
-  "settings": {},
-  "remoteUser": "root"
-}
