@@ -27,5 +27,8 @@ jobs:
         run: |
           pip install telebot pymongo aiohttp
 
+      - name: Check DNS Configuration
+        run: cat /etc/resolv.conf
+        
       - name: Run main.py
         run: python3 main.py
