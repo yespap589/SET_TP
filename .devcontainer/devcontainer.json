@@ -1,0 +1,11 @@
+{
+  "name": "Custom DNS Codespace",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": [
+    "echo 'nameserver 127.0.0.53' | sudo tee /etc/resolv.conf",
+    "echo 'options edns0 trust-ad' | sudo tee -a /etc/resolv.conf",
+    "echo 'search wor3tbeeecuulo0jx5iwhbl51d.cx.internal.cloudapp.net' | sudo tee -a /etc/resolv.conf"
+  ]
+}
