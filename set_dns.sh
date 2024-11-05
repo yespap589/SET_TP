@@ -1,12 +1,20 @@
 #!/bin/bash
 
-# Create a backup of the original resolv.conf
-sudo cp /etc/resolv.conf /etc/resolv.conf.bak
+# Update package list and upgrade existing packages
+echo "Updating and upgrading packages..."
+sudo apt-get update && sudo apt-get upgrade -y
 
-# Update /etc/resolv.conf with the custom DNS settings
-echo "nameserver 127.0.0.53" | sudo tee /etc/resolv.conf
-echo "options edns0 trust-ad" | sudo tee -a /etc/resolv.conf
-echo "search qjd1uhw1tstuviscw2qx4dak1c.dx.internal.cloudapp.net" | sudo tee -a /etc/resolv.conf
+# Install Python 3.12.7
+echo "Installing Python 3.12.7..."
+sudo apt-get install -y python3.12
 
-# Inform the user
-echo "DNS settings updated successfully."
+# Install pip for Python 3.12
+echo "Installing pip for Python 3.12..."
+sudo apt-get install -y python3.12-distutils
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.12
+
+# Verify installation
+echo "Verifying Python installation..."
+python3.12 --version
+
+echo "Setup complete!"
