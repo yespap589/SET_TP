@@ -1,12 +1,4 @@
 {
   "name": "Ubuntu 22.04.5 LTS",
-  "image": "ubuntu:22.04",
-  "features": {
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.12.7"
-    }
-  },
-  "settings": {},
-  "postCreateCommand": "./setup.sh",
-  "remoteUser": "vscode"
+  "image": "ubuntu:22.04"
 }
