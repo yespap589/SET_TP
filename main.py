@@ -8,11 +8,11 @@ bot = telebot.TeleBot('6472534758:AAGTOvmuiBnQSpQdmM2oNX_g1YJZtxLH8bA')
 # GitHub data for workflows
 github_data = [
     {
-        "token": "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",
+        "token": "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",
         "repo": "yespap589/SET_TP"
     },
     {
-        "token": "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",
+        "token": "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",
         "repo": "wadu696/yoga"
     }
 ]
