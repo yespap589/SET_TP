@@ -1,9 +1,0 @@
-{
-  "name": "Custom Network Config Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-  "features": {
-    "python": "3.12.7"  // Adjust version as needed
-  },
-  "postCreateCommand": "./setup.sh",
-  "remoteUser": "vscode"  // Ensures full access for user
-}
